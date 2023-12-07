@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article {
+
   @Id // id 필드를 기본키로 지정
   @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키를 자동으로 1씩 증가
   @Column(name = "id", updatable = false)
@@ -23,7 +24,7 @@ public class Article {
   private String title;
 
   @Column(name = "content", nullable = false)
-  private  String content;
+  private String content;
 
   @Builder // 빌더 패턴으로 객체 생성
   public Article(String title, String content) {
@@ -32,7 +33,8 @@ public class Article {
   }
 
   protected Article() { // 기본 생성자
-
+//    this.title = "ddd";
+    // test
   }
 
   // 게터
