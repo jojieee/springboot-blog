@@ -33,6 +33,7 @@ public class Article {
   }
 
   protected Article() { // 기본 생성자
+    //dddd
   }
 
   // 게터
