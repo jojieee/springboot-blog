@@ -33,8 +33,6 @@ public class Article {
   }
 
   protected Article() { // 기본 생성자
-//    this.title = "ddd";
-    // test
   }
 
   // 게터
