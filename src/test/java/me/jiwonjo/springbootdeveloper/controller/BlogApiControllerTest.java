@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import me.jiwonjo.springbootdeveloper.domain.Article;
 import me.jiwonjo.springbootdeveloper.dto.AddArticleRequest;
+import me.jiwonjo.springbootdeveloper.dto.UpdateArticleRequest;
 import me.jiwonjo.springbootdeveloper.repository.BlogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -130,5 +132,36 @@ class BlogApiControllerTest {
     List<Article> articles = blogRepository.findAll();
 
     assertThat(articles).isEmpty();
+  }
+
+  @DisplayName("editArticles: 블로그 글 수정을 성공했다.")
+  @Test
+  public void editArticle() throws Exception {
+    // given
+    final String url = "/api/articles/{id}";
+    final String title = "title";
+    final String content = "content";
+
+    Article savedArticle = blogRepository.save(
+        Article.builder().title(title).content(content).build()
+    );
+
+    final String newTitle = "new Title";
+    final String newContent = "new Content";
+
+    UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+
+    // when
+    ResultActions result = mockMvc.perform(
+        put(url, savedArticle.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    result.andExpect(status().isOk());
+
+    Article article = blogRepository.findById(savedArticle.getId()).get();
+
+    assertThat(article.getTitle()).isEqualTo(newTitle);
+    assertThat(article.getContent()).isEqualTo(newContent);
   }
 }
