@@ -32,9 +32,6 @@ public class Article {
     this.content = content;
   }
 
-  protected Article() { // 기본 생성자
-  }
-
   // 게터
   // @Getter, @NoArgsConstructor 어노테이션으로 하단의 반복되는 코드를 사용하지 않고 접근자 메서드를 만들수 있게 되었음.
 
