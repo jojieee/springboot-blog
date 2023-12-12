@@ -5,10 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity // 엔티티로 지정
 @Getter
@@ -36,6 +39,14 @@ public class Article {
     this.title = title;
     this.content = content;
   }
+
+  @CreatedDate
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
+
+  @LastModifiedDate
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
 
   // 게터
   // @Getter, @NoArgsConstructor 어노테이션으로 하단의 반복되는 코드를 사용하지 않고 접근자 메서드를 만들수 있게 되었음.
